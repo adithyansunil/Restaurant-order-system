@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% set active = 'place' %}
+{% block content %}
+<section class="card">
+    <h2>Place an Order</h2>
+    <form method="POST" action="{{ url_for('place_order') }}" class="form-grid">
+        
+        <label>
+            <span>Table Number</span>
+            <select name="table_no" required>
+                <option value="1">Table 1</option>
+                <option value="2">Table 2</option>
+                <option value="3">Table 3</option>
+                <option value="4">Table 4</option>
+            </select>
+        </label>
+
+        <label>
+            <span>Menu Item</span>
+            <select name="item_name" required>
+                <option value="Pizza">🍕 Pizza</option>
+                <option value="Burger">🍔 Burger</option>
+                <option value="Coke">🥤 Coke</option>
+                <option value="Pasta">🍝 Pasta</option>
+            </select>
+        </label>
+
+        <label>
+            <span>Quantity</span>
+            <input type="number" name="quantity" min="1" value="1" required />
+        </label>
+
+        <div class="form-actions">
+            <button class="btn primary" type="submit">✅ Submit Order</button>
+            <button class="btn" type="reset">❌ Clear</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

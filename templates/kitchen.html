@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% set active = 'kitchen' %}
+{% block content %}
+<section class="card">
+    <h2>Kitchen</h2>
+    <table class="table" id="kitchen-table">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Table</th>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <!-- <td>{{ order[0] }}</td> -->
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td class="{% if order[4] == 'Pending' %}status-pending{% elif order[4] == 'Prepared' %}status-prepared{% endif %}">
+                    {{ order[4] }}
+                </td>
+                <td>
+                    {% if order[4] == 'Pending' %}
+                        <form method="POST" action="{{ url_for('kitchen') }}">
+                            <input type="hidden" name="order_id" value="{{ order[0] }}">
+                            <button type="submit">Mark as Prepared</button>
+                        </form>
+                    {% else %}
+                        ✔ Done
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

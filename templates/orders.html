@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% set active = 'orders' %}
+{% block content %}
+<section class="card">
+    <h2>Orders</h2>
+    <table class="table" id="orders-table">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Table</th>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <!-- <td>{{ order[0] }}</td> -->
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td class="{% if order[4] == 'Pending' %}status-pending{% elif order[4] == 'Prepared' %}status-prepared{% endif %}">
+                    {{ order[4] }}
+                </td>
+                <td>{{ order[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

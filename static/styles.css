@@ -1,0 +1,176 @@
+/* ---------------- Base Layout ---------------- */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+header {
+    background: #4a90e2;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover, nav a.active {
+    text-decoration: underline;
+}
+
+/* ---------------- Container ---------------- */
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* ---------------- Card ---------------- */
+.card {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #4a90e2;
+}
+
+/* ---------------- Forms ---------------- */
+form label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+form select, form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #357ab8;
+}
+
+/* ---------------- Tables ---------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+table th {
+    background: #f0f4f9;
+    color: #333;
+    font-weight: 600;
+}
+
+table tr:hover {
+    background: #fafafa;
+}
+
+/* ---------------- Status Styles ---------------- */
+.status-pending {
+    color: #e67e22;
+    font-weight: bold;
+}
+.status-prepared {
+    color: #27ae60;
+    font-weight: bold;
+}
+/* Form styling */
+.form-grid {
+    display: grid;
+    gap: 15px;
+    max-width: 400px;
+    margin: auto;
+}
+
+.form-grid label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-grid select,
+.form-grid input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.form-grid select:focus,
+.form-grid input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn.primary {
+    background: #007BFF;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #0056b3;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
