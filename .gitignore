@@ -29,3 +29,7 @@ instantclient_*/
 # ---- OS Files ----
 .DS_Store
 Thumbs.db
+
+# Secrets
+config.py
+.env

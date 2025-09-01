@@ -1,5 +1,7 @@
-import oracledb
+import oracledb,os
 from flask import Flask, render_template, request, redirect, url_for
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -8,9 +10,9 @@ oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_23_8")  # change p
 
 def get_db_connection():
     return oracledb.connect(
-        user="system", 
-        password="manager", 
-        dsn="localhost/xe"
+        user=os.getenv("DB_USER", "system"),
+    password=os.getenv("DB_PASSWORD"),
+    dsn=os.getenv("DB_DSN", "localhost/xe")
     )
 
 # ---------- Routes ----------
