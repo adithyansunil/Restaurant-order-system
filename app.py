@@ -3,15 +3,11 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# ------------------ DB Connection ------------------
-def get_db_connection():
-    conn = sqlite3.connect("orders.db")  # SQLite DB file
-    conn.row_factory = sqlite3.Row       # results as dict-like objects
-    return conn
+DB_FILE = "orders.db"
 
-# ------------------ Initialize DB ------------------
+# ---------- Initialize DB ----------
 def init_db():
-    conn = get_db_connection()
+    conn = sqlite3.connect(DB_FILE)
     cur = conn.cursor()
     cur.execute("""
         CREATE TABLE IF NOT EXISTS orders (
@@ -24,12 +20,14 @@ def init_db():
         )
     """)
     conn.commit()
+    cur.close()
     conn.close()
 
-# ------------------ Routes ------------------
+# Run table creation at app startup
+init_db()
 
-# Place Order Page
-@app.route("/", methods=["GET", "POST"])
+# ---------- Routes ----------
+@app.route("/")
 @app.route("/place-order", methods=["GET", "POST"])
 def place_order():
     if request.method == "POST":
@@ -37,44 +35,48 @@ def place_order():
         item_name = request.form["item_name"]
         quantity = request.form["quantity"]
 
-        conn = get_db_connection()
+        conn = sqlite3.connect(DB_FILE)
         cur = conn.cursor()
         cur.execute("""
             INSERT INTO orders (table_no, item_name, quantity)
             VALUES (?, ?, ?)
         """, (table_no, item_name, quantity))
         conn.commit()
+        cur.close()
         conn.close()
         return redirect(url_for("orders"))
 
     return render_template("place_order.html")
 
-# Orders Page
+
 @app.route("/orders")
 def orders():
-    conn = get_db_connection()
-    orders = conn.execute(
-        "SELECT * FROM orders ORDER BY order_id"
-    ).fetchall()
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    cur.execute("SELECT order_id, table_no, item_name, quantity, status, created_at FROM orders ORDER BY order_id")
+    rows = cur.fetchall()
+    cur.close()
     conn.close()
-    return render_template("orders.html", orders=orders)
+    return render_template("orders.html", orders=rows)
 
-# Kitchen Page
+
 @app.route("/kitchen", methods=["GET", "POST"])
 def kitchen():
-    conn = get_db_connection()
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+
     if request.method == "POST":
         order_id = request.form["order_id"]
-        conn.execute("UPDATE orders SET status='Prepared' WHERE order_id=?", (order_id,))
+        cur.execute("UPDATE orders SET status='Prepared' WHERE order_id=?", (order_id,))
         conn.commit()
 
-    orders = conn.execute(
-        "SELECT * FROM orders ORDER BY order_id"
-    ).fetchall()
+    cur.execute("SELECT order_id, table_no, item_name, quantity, status FROM orders ORDER BY order_id")
+    rows = cur.fetchall()
+    cur.close()
     conn.close()
-    return render_template("kitchen.html", orders=orders)
+    return render_template("kitchen.html", orders=rows)
 
-# ------------------ Run App ------------------
+
+# ---------- Run ----------
 if __name__ == "__main__":
-    init_db()   # Create table if not exists
     app.run(debug=True)
