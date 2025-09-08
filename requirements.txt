@@ -1,3 +1,2 @@
 Flask==3.0.3
-oracledb==2.3.0
-python-dotenv==1.0.1
+gunicorn==23.0.0   # needed for Render
